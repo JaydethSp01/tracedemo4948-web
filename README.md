@@ -1,2 +1,3 @@
-# tracedemo4948-web
-ScrumDev AI frontend (tracedemo4948-web)
+# TRACEDEMO4948 - Frontend
+
+Next.js desplegado en Vercel.
