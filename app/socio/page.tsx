@@ -65,9 +65,9 @@ export default function SociosPage() {
     const q = search.toLowerCase()
     return (socios ?? []).filter(s => {
       const matchSearch =
-        s.nombre.toLowerCase().includes(q) ||
-        s.apellido.toLowerCase().includes(q) ||
-        s.email.toLowerCase().includes(q) ||
+        (s.nombre ?? "").toLowerCase().includes(q) ||
+        (s.apellido ?? "").toLowerCase().includes(q) ||
+        (s.email ?? "").toLowerCase().includes(q) ||
         s.telefono.includes(q)
       const matchEstado = filterEstado === 'todos' || s.estado === filterEstado
       return matchSearch && matchEstado
@@ -99,9 +99,9 @@ export default function SociosPage() {
 
   function validate(): boolean {
     const errors: Partial<Record<keyof Omit<Socio, 'id'>, string>> = {}
-    if (!form.nombre.trim()) errors.nombre = 'El nombre es obligatorio'
-    if (!form.apellido.trim()) errors.apellido = 'El apellido es obligatorio'
-    if (!form.email.trim()) errors.email = 'El email es obligatorio'
+    if (!(form.nombre ?? "").trim()) errors.nombre = 'El nombre es obligatorio'
+    if (!(form.apellido ?? "").trim()) errors.apellido = 'El apellido es obligatorio'
+    if (!(form.email ?? "").trim()) errors.email = 'El email es obligatorio'
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) errors.email = 'Email inválido'
     if (!form.fechaInscripcion) errors.fechaInscripcion = 'La fecha de inscripción es obligatoria'
     const emailDuplicate = (socios ?? []).find(s => s.email === form.email && s.id !== editId)

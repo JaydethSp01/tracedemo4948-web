@@ -508,3 +508,6 @@ export const metricasResumen = {
       clases.filter((c) => c.activa).length
   ),
 };
+
+// exports de respaldo (entidad con página pero sin datos en el mock)
+export const pagos: any[] = [];

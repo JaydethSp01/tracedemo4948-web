@@ -65,7 +65,7 @@ export function saveRoles(roles: Role[]) {
 export function login(email: string, password: string): User | null {
   seedAuth();
   const u = getUsers().find(
-    (x) => x.email.toLowerCase() === email.trim().toLowerCase() && x.password === password && x.active
+    (x) => (x.email ?? "").toLowerCase() === email.trim().toLowerCase() && x.password === password && x.active
   );
   if (u) {
     write(SESSION_KEY, { id: u.id, email: u.email, name: u.name, role: u.role });

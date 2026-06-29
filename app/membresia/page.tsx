@@ -52,9 +52,9 @@ export default function MembresiasPage() {
 
   const filtered = (membresias ?? []).filter((m) => {
     const matchSearch =
-      m.socioNombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      m.planNombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      m.socioId.toLowerCase().includes(searchTerm.toLowerCase());
+      (m.socioNombre ?? "").toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (m.planNombre ?? "").toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (m.socioId ?? "").toLowerCase().includes(searchTerm.toLowerCase());
     const matchEstado = filterEstado === "todos" || m.estado === filterEstado;
     return matchSearch && matchEstado;
   });
@@ -70,8 +70,8 @@ export default function MembresiasPage() {
 
   function validate(data: Omit<Membresia, "id">) {
     const e: typeof errors = {};
-    if (!data.socioNombre.trim()) e.socioNombre = "El nombre del socio es obligatorio.";
-    if (!data.socioId.trim()) e.socioId = "El ID del socio es obligatorio.";
+    if (!(data.socioNombre ?? "").trim()) e.socioNombre = "El nombre del socio es obligatorio.";
+    if (!(data.socioId ?? "").trim()) e.socioId = "El ID del socio es obligatorio.";
     if (!data.fechaInicio) e.fechaInicio = "La fecha de inicio es obligatoria.";
     if (!data.fechaFin) e.fechaFin = "La fecha de fin es obligatoria.";
     if (data.fechaFin && data.fechaInicio && data.fechaFin < data.fechaInicio)
@@ -199,7 +199,7 @@ export default function MembresiasPage() {
             { label: "Total membresías", value: stats.total, color: "text-gray-900", icon: "M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" },
             { label: "Activas", value: stats.activas, color: "text-emerald-600", icon: "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" },
             { label: "Vencidas", value: stats.vencidas, color: "text-red-600", icon: "M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" },
-            { label: "Ingresos activos", value: `$${stats.ingresosMes.toLocaleString("es-AR")}`, color: "text-indigo-600", icon: "M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" },
+            { label: "Ingresos activos", value: `$${(stats.ingresosMes ?? 0).toLocaleString("es-AR")}`, color: "text-indigo-600", icon: "M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" },
           ].map(({ label, value, color, icon }) => (
             <div key={label} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
               <div className="flex items-center justify-between mb-3">
@@ -281,7 +281,7 @@ export default function MembresiasPage() {
                     <td className="px-5 py-3.5">
                       <div className="flex items-center gap-2.5">
                         <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center text-xs font-bold shrink-0">
-                          {m.socioNombre.charAt(0).toUpperCase()}
+                          {(m.socioNombre ?? "").charAt(0).toUpperCase()}
                         </div>
                         <div>
                           <p className="font-medium text-gray-900">{m.socioNombre}</p>
@@ -297,7 +297,7 @@ export default function MembresiasPage() {
                         {m.estado}
                       </span>
                     </td>
-                    <td className="px-5 py-3.5 font-semibold text-gray-900">${m.precio.toLocaleString("es-AR")}</td>
+                    <td className="px-5 py-3.5 font-semibold text-gray-900">${(m.precio ?? 0).toLocaleString("es-AR")}</td>
                     <td className="px-5 py-3.5 text-gray-500 text-xs">{m.metodoPago}</td>
                     <td className="px-5 py-3.5">
                       <div className="flex items-center justify-end gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">

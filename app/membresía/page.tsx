@@ -67,8 +67,8 @@ export default function MembresiaPage() {
 
   const filtered = (membresias ?? []).filter((m) => {
     const matchSearch =
-      m.nombre.toLowerCase().includes(search.toLowerCase()) ||
-      m.descripcion.toLowerCase().includes(search.toLowerCase());
+      (m.nombre ?? "").toLowerCase().includes(search.toLowerCase()) ||
+      (m.descripcion ?? "").toLowerCase().includes(search.toLowerCase());
     const matchFilter =
       filterActiva === 'todas' ||
       (filterActiva === 'activas' && m.activa) ||
@@ -103,7 +103,7 @@ export default function MembresiaPage() {
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!form.nombre.trim() || !form.precio) return;
+    if (!(form.nombre ?? "").trim() || !form.precio) return;
 
     const precio = parseFloat(form.precio);
     const duracionDias = parseInt(form.duracionDias, 10);
@@ -114,8 +114,8 @@ export default function MembresiaPage() {
           m.id === editingId
             ? {
                 ...m,
-                nombre: form.nombre.trim(),
-                descripcion: form.descripcion.trim(),
+                nombre: (form.nombre ?? "").trim(),
+                descripcion: (form.descripcion ?? "").trim(),
                 precio,
                 duracionDias,
                 activa: form.activa,
@@ -127,8 +127,8 @@ export default function MembresiaPage() {
     } else {
       const nueva: Membresia = {
         id: ++_nextId,
-        nombre: form.nombre.trim(),
-        descripcion: form.descripcion.trim(),
+        nombre: (form.nombre ?? "").trim(),
+        descripcion: (form.descripcion ?? "").trim(),
         precio,
         duracionDias,
         activa: form.activa,
@@ -330,7 +330,7 @@ export default function MembresiaPage() {
                       </td>
                       <td className="px-5 py-4">
                         <span className="font-bold text-gray-900 text-base">
-                          ${m.precio.toLocaleString('es-MX')}
+                          ${(m.precio ?? 0).toLocaleString('es-MX')}
                         </span>
                         <span className="text-gray-400 text-xs ml-1">MXN</span>
                       </td>

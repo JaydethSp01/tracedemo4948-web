@@ -35,7 +35,7 @@ function planToForm(plan: Plan): FormData {
     precio: plan.precio,
     duracion: plan.duracion,
     descripcion: plan.descripcion,
-    beneficios: plan.beneficios.join(", "),
+    beneficios: (plan.beneficios ?? []).join(", "),
     activo: plan.activo,
   };
 }
@@ -67,8 +67,8 @@ export default function PlanesPage() {
 
   const filtered = (planes ?? []).filter(
     (p) =>
-      p.nombre.toLowerCase().includes(search.toLowerCase()) ||
-      p.descripcion.toLowerCase().includes(search.toLowerCase())
+      (p.nombre ?? "").toLowerCase().includes(search.toLowerCase()) ||
+      (p.descripcion ?? "").toLowerCase().includes(search.toLowerCase())
   );
 
   const totalActivos = (planes ?? []).filter((p) => p.activo).length;

@@ -51,9 +51,9 @@ export default function ClasesPage() {
 
   const filtradas = (clases ?? []).filter(c => {
     const coincideBusqueda =
-      c.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
-      c.instructor.toLowerCase().includes(busqueda.toLowerCase()) ||
-      c.dia.toLowerCase().includes(busqueda.toLowerCase())
+      (c.nombre ?? "").toLowerCase().includes(busqueda.toLowerCase()) ||
+      (c.instructor ?? "").toLowerCase().includes(busqueda.toLowerCase()) ||
+      (c.dia ?? "").toLowerCase().includes(busqueda.toLowerCase())
     const coincideEstado = filtroEstado === 'Todos' || c.estado === filtroEstado
     return coincideBusqueda && coincideEstado
   })
@@ -252,7 +252,7 @@ export default function ClasesPage() {
                     <td className="px-5 py-4">
                       <div className="flex items-center gap-2">
                         <div className="w-7 h-7 rounded-full bg-indigo-500/20 flex items-center justify-center text-xs font-bold text-indigo-400">
-                          {c.instructor.charAt(0)}
+                          {(c.instructor ?? "").charAt(0)}
                         </div>
                         <span className="text-sm text-gray-300">{c.instructor}</span>
                       </div>

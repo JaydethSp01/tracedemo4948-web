@@ -55,8 +55,8 @@ export default function PagoPage() {
 
   const pagosFiltrados = (pagos ?? []).filter((p) => {
     const coincideBusqueda =
-      p.socioNombre.toLowerCase().includes(busqueda.toLowerCase()) ||
-      p.membresiaNombre.toLowerCase().includes(busqueda.toLowerCase());
+      (p.socioNombre ?? "").toLowerCase().includes(busqueda.toLowerCase()) ||
+      (p.membresiaNombre ?? "").toLowerCase().includes(busqueda.toLowerCase());
     const coincideEstado = filtroEstado === "" || p.estado === filtroEstado;
     return coincideBusqueda && coincideEstado;
   });
@@ -306,7 +306,7 @@ export default function PagoPage() {
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2.5">
                         <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-xs font-bold flex-shrink-0">
-                          {pago.socioNombre.charAt(0).toUpperCase()}
+                          {(pago.socioNombre ?? "").charAt(0).toUpperCase()}
                         </div>
                         <span className="font-semibold text-gray-900">{pago.socioNombre}</span>
                       </div>

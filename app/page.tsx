@@ -111,7 +111,7 @@ export default function DashboardPage() {
                 <tbody className="divide-y divide-gray-50">
                   {(sociosRecientes ?? []).map((socio) => {
                     const membresia = (membresias ?? []).find((m) => m.socioId === socio.id);
-                    const initials = `${socio.nombre.charAt(0)}${socio.apellido.charAt(0)}`;
+                    const initials = `${(socio.nombre ?? "").charAt(0)}${(socio.apellido ?? "").charAt(0)}`;
                     return (
                       <tr key={socio.id} className="hover:bg-gray-50/80 transition-colors">
                         <td className="px-6 py-4">
